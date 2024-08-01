@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Picture Book</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(to bottom right, #9c27b0, #e91e63, #f44336);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .title {
+            font-family: "Fredoka One", cursive;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #9c27b0, #e91e63);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4"
+    style="background-image: url('{{ url_for('static', filename='images/bg1.jpg') }}'), linear-gradient(to bottom right, #8e44ad, #e74c3c); background-size: cover; background-position: center;"
+    <div class="w-full max-w-4xl mx-auto">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl">
+            <h1 class="title text-4xl md:text-5xl font-bold text-purple-600 mb-8 text-center">
+                Picture Book
+            </h1>
+            <div class="flex justify-between mb-6">
+                <button id="toggleView"
+                    class="btn text-white px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl">
+                    Toggle View
+                </button>
+
+                <div id="navigationButtons" class="hidden space-x-4">
+                    <button id="prevButton"
+                        class="btn text-white px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl">
+                        Previous
+                    </button>
+                    <button id="nextButton"
+                        class="btn text-white px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl">
+                        Next
+                    </button>
+                </div>
+            </div>
+            <div id="pictureBookGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Images will be inserted here for grid view -->
+            </div>
+            <div id="pictureBookSingle" class="hidden">
+                <img id="singleImage" class="w-full h-full object-cover rounded-xl shadow-md" src=""
+                    alt="Picture Book Image" />
+            </div>
+        </div>
+    </div>
+
+<script>
+    const imageList = {{ images|tojson|safe }};
+    const toggleViewButton = document.getElementById('toggleView');
+    const pictureBookGrid = document.getElementById('pictureBookGrid');
+    const pictureBookSingle = document.getElementById('pictureBookSingle');
+    const singleImage = document.getElementById('singleImage');
+    const navigationButtons = document.getElementById('navigationButtons');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    let currentIndex = 0;
+
+    // Populate the grid view with images
+    function populateGrid() {
+        pictureBookGrid.innerHTML = ''; // Clear existing content
+        imageList.forEach((src, index) => {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105';
+            const img = document.createElement('img');
+            img.className = 'w-full h-64 object-cover';
+            img.src = "\\" + src; // Remove the "\\" prefix
+            img.alt = `Picture ${index + 1}`;
+            img.addEventListener('click', () => showSingleImageView(index));
+            imgDiv.appendChild(img);
+            pictureBookGrid.appendChild(imgDiv);
+        });
+    }
+
+    // Toggle between grid and single image view
+    function toggleView() {
+        pictureBookGrid.classList.toggle('hidden');
+        pictureBookSingle.classList.toggle('hidden');
+        navigationButtons.classList.toggle('hidden');
+        if (!pictureBookSingle.classList.contains('hidden') && !singleImage.src) {
+            showSingleImageView(0);
+        }
+    }
+
+    // Show the single image view with navigation
+    function showSingleImageView(index) {
+        currentIndex = index;
+        singleImage.src = imageList[currentIndex];
+        singleImage.alt = `Picture ${currentIndex + 1}`;
+        pictureBookGrid.classList.add('hidden');
+        pictureBookSingle.classList.remove('hidden');
+        navigationButtons.classList.remove('hidden');
+        updateNavigationButtons();
+    }
+
+    // Update navigation button states
+    function updateNavigationButtons() {
+        prevButton.disabled = currentIndex === 0;
+        nextButton.disabled = currentIndex === imageList.length - 1;
+    }
+
+    // Navigate to the previous image
+    function showPreviousImage() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            singleImage.src = imageList[currentIndex];
+            singleImage.alt = `Picture ${currentIndex + 1}`;
+            updateNavigationButtons();
+        }
+    }
+
+    // Navigate to the next image
+    function showNextImage() {
+        if (currentIndex < imageList.length - 1) {
+            currentIndex++;
+            singleImage.src = imageList[currentIndex];
+            singleImage.alt = `Picture ${currentIndex + 1}`;
+            updateNavigationButtons();
+        }
+    }
+
+    // Event listeners
+    toggleViewButton.addEventListener('click', toggleView);
+    prevButton.addEventListener('click', showPreviousImage);
+    nextButton.addEventListener('click', showNextImage);
+
+    // Initialize the grid
+    populateGrid();
+</script>
+</body>
+
+</html>
