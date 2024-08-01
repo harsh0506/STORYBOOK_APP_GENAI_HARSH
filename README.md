@@ -16,6 +16,8 @@ The application allows users to input a story prompt, which is then processed by
 - PIL (Python Imaging Library)
 - JSON (for data storage)
 - HTML/CSS (for frontend)
+- Docker
+- GCP Cloud run
 
 ## Video Demo (as the deployment for a longer time costs a lot for a side project)
 
