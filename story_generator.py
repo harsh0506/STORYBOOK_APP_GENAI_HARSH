@@ -7,6 +7,7 @@
 # - process_text(): Processes generated text and creates images
 
 ## For complete working code please connect with me
+## Please read README.md before proceeding further
 
 import os
 import random
