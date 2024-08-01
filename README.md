@@ -33,14 +33,18 @@ The application allows users to input a story prompt, which is then processed by
 
 ## Get started
 1) clone repo
-2) run 
+2) run
+   ```bash
+   mkdir -p static/image && cp bg1.jpg bg2.jpg static/image/
+   ```
+4) run 
    ```bash
    mkdir -p templates && touch templates/index.html templates/upload.html
    ```
-3) ```bash
+5) ```bash
    pip install -r requirements.txt
    ```
-4) ```bash 
+6) ```bash 
    flask run
    ```
 
