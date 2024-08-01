@@ -19,7 +19,7 @@ The application allows users to input a story prompt, which is then processed by
 
 ## Video Demo (as the deployment for a longer time costs a lot for a side project)
 
-[![IMAGE ALT TEXT HERE](Video_Thumbnail.png)](https://www.youtube.com/watch?v=JiLOqWepyo0w)
+[![IMAGE ALT TEXT HERE](video_thumbnail.png)](https://www.youtube.com/watch?v=JiLOqWepyo0w)
 
 
 ## Features
