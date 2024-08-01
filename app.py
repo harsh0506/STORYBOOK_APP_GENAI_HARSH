@@ -6,6 +6,8 @@
 # - Helper functions: load_storybooks(), save_storybook(), get_all_file_paths()
 # - Error handling for rate limiting
 
+## Please read README.md before proceeding further
+
 import os
 import json
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
